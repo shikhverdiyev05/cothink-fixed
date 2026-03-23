@@ -14,11 +14,11 @@ const Mentors = () => {
     const { apiUrl } = useContext(ApiContext);
 
     useEffect(() => {
-        axios.get(`${apiUrl}/server/mentors/mentors.php`).then(res => {
+        axios.get(`https://www.cothink.az/server/mentors/mentors.php`).then(res => {
             setMentors(res.data);
         });
 
-        axios.get(`${apiUrl}/server/categories/categoryRead.php`).then(res => {
+        axios.get(`https://www.cothink.az/server/categories/categoryRead.php`).then(res => {
             const categoriesData = res.data.data || res.data;
             setCategories(categoriesData);
             setDisplayedCategories(categoriesData.slice(0, 4));
