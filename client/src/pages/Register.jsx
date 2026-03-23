@@ -64,7 +64,7 @@ const {setUser}=useContext(AuthContext)
           };
 
     try {
-      const res = await axios.post("https://cothink.az/server/register.php",
+      const res = await axios.post("https://www.cothink.az/server/register.php",
          formData,
         { headers: { "Content-Type": "application/json" } }
       );
@@ -96,7 +96,7 @@ const {setUser}=useContext(AuthContext)
 
     useEffect(() => {
       axios
-        .get(`https://cothink.az/server/categories/categoryRead.php`)
+        .get(`https://www.cothink.az/server/categories/categoryRead.php`)
         .then((res) => {
           if (res.data.status === "success") {
             setCategories(res.data.data);
