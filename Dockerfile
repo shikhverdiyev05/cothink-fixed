@@ -26,8 +26,9 @@ RUN apt-get update && apt-get install -y \
         libpng-dev \
         libjpeg-dev \
         libfreetype6-dev \
+        libpq-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo pdo_mysql zip gd \
+    && docker-php-ext-install pdo pdo_pgsql pdo_mysql zip gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Composer
@@ -97,4 +98,11 @@ RUN { \
 
 EXPOSE 80
 
+# Entrypoint: run the database migration then hand off to Apache.
+# The migration script is idempotent (uses IF NOT EXISTS), so it is safe
+# to run on every container start.
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
